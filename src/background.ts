@@ -1,7 +1,33 @@
+let allow = ["manaba.tsukuba.ac.jp", "web.microsoftstream.com"];
+let forbidden = ["tweetdeck.twitter.com", "twitter.com"];
+let allowOrForbidden = "forbidden";
+
+function postUpdatedState(port: chrome.runtime.Port) {
+  port.postMessage({
+    typeName: "updateState",
+    allow: allow,
+    forbidden: forbidden,
+    allowOrForbidden: allowOrForbidden,
+  });
+}
+
 chrome.runtime.onConnect.addListener(function(port) {
   console.log(port);
+  postUpdatedState(port);
   port.onMessage.addListener(function(msg) {
-    console.log(msg);
+    if (msg.typeName == "updateDomainList") {
+      if (msg.listName == "allow") {
+        allow = msg.domains;
+      }
+      else if (msg.listName == "forbidden") {
+        forbidden = msg.domains;
+      }
+      postUpdatedState(port);
+    }
+    else if (msg.typeName == "switchAllowOrForbidden") {
+      allowOrForbidden = msg.allowOrForbidden;
+      postUpdatedState(port);
+    }
   });
 });
 
