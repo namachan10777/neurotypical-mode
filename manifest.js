@@ -3,5 +3,8 @@ export default {
   background: {
     scripts: ["js/background.js"],
   },
+  browser_action: {
+    default_popup: "index.html",
+  },
   permissions: ["tabs"]
 };

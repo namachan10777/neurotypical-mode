@@ -5,7 +5,8 @@
     "strict": true,
     "rootDir": "src",
     "esModuleInterop": true,
-    "typeRoots": ["node_modules/@types/"]
+    "typeRoots": ["node_modules/@types/"],
+    "jsx": "react"
   },
   "exclude": [
     "node_modules"
