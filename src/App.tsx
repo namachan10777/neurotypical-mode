@@ -31,13 +31,13 @@ export default (props: Props) => {
     });
   };
   return <div>
-    <form>
+    <div>
       <label htmlFor="allow">allow</label>
       <input type="radio" id="allow" name="allow_or_forbidden" value="allow" checked={allowOrForbidden == "allow"} onChange={() => switchAllowOrForbidden("allow")}/>
       <DomainList list={allowList} setNewDomainList={(l) => updateDomainList("allow", l)}/>
       <label htmlFor="forbidden" >forbidden</label>
       <input type="radio" id="forbidden" name="allow_or_forbidden" value="forbidden" checked={allowOrForbidden == "forbidden"} onChange={() => switchAllowOrForbidden("forbidden")}/>
       <DomainList list={forbiddenList} setNewDomainList={(l) => updateDomainList("forbidden", l)}/>
-    </form>
+    </div>
   </div>;
 };
