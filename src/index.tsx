@@ -1,5 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import Hello from "./Hello";
+import App from "./App";
 
-ReactDOM.render(<Hello content="hello world"/>, document.getElementById("root"));
+let port = chrome.runtime.connect("kdlolnhobojjgamhfdcmmanlinacgofa");
+
+ReactDOM.render(<App port={port}/>, document.getElementById("root"));

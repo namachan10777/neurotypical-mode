@@ -1,3 +1,10 @@
+chrome.runtime.onConnect.addListener(function(port) {
+  console.log(port);
+  port.onMessage.addListener(function(msg) {
+    console.log(msg);
+  });
+});
+
 chrome.runtime.onInstalled.addListener(function() {
   let twitterRe = /https:\/\/(tweetdeck\.)?twitter\.com.*/;
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
