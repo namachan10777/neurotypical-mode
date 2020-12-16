@@ -30,7 +30,7 @@ export default {
       patterns: [
         {
           from: "public",
-          to: "../"
+          to: "dist"
         }
       ],
       options: {
