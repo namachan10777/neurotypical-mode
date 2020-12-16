@@ -1,5 +1,8 @@
 import path from "path";
 import CopyPlugin from "copy-webpack-plugin";
+import WebpackExtensionManifestPlugin from 'webpack-extension-manifest-plugin';
+import baseManifest from "./manifest.js";
+import pkg from "./package.json";
 
 export default {
   mode: process.env.NODE_ENV || "development",
@@ -7,8 +10,8 @@ export default {
     background: path.join(__dirname, "src/background.ts"),
   },
   output: {
-    path: path.join(__dirname, "dist/js"),
-    filename: "[name].js",
+    path: path.join(__dirname, "dist"),
+    filename: "js/[name].js",
   },
   module: {
     rules: [
@@ -32,6 +35,16 @@ export default {
       ],
       options: {
       },
+    }),
+    new WebpackExtensionManifestPlugin({
+      config: {
+        base: baseManifest,
+        extend: {
+          version: pkg.version,
+          name: pkg.name,
+          description: pkg.description,
+        },
+      }
     }),
   ],
 };
