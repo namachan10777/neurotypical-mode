@@ -1,8 +1,7 @@
 export default {
-  manifest_version: 3,
+  manifest_version: 2,
   background: {
-    scripts: ["background.js"],
-    persistent: false,
+    scripts: ["js/background.js"],
   },
   permissions: ["tabs"]
 };
