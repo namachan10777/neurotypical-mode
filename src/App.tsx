@@ -9,11 +9,13 @@ export default (props: Props) => {
   const [allowList, setAllowList] = React.useState([]);
   const [forbiddenList, setForbiddenList] = React.useState([]);
   const [allowOrForbidden, setAllowOrForbidden] = React.useState("forbidden");
+  const [enable, setEnable] = React.useState(false);
   props.port.onMessage.addListener(function(msg) {
     if (msg.typeName == "updateState") {
       setAllowList(msg.allow);
       setForbiddenList(msg.forbidden);
       setAllowOrForbidden(msg.allowOrForbidden);
+      setEnable(msg.enable);
       console.log(msg);
     }
   });
@@ -30,7 +32,15 @@ export default (props: Props) => {
       allowOrForbidden: allowOrForbidden,
     });
   };
+  const enableMode = (enable: boolean) => {
+    props.port.postMessage({
+      typeName: "enableMode",
+      enable: enable,
+    });
+  };
   return <div>
+    <input id="enable-checkbox" type="checkbox" checked={enable} onChange={(e) => enableMode(e.target.checked)}/>
+    <label htmlFor="enable-checkbox">enable</label>
     <div>
       <label htmlFor="allow">allow</label>
       <input type="radio" id="allow" name="allow_or_forbidden" value="allow" checked={allowOrForbidden == "allow"} onChange={() => switchAllowOrForbidden("allow")}/>

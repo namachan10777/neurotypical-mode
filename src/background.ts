@@ -1,6 +1,7 @@
 let allow = ["manaba.tsukuba.ac.jp", "web.microsoftstream.com"];
 let forbidden = ["tweetdeck.twitter.com", "twitter.com"];
 let allowOrForbidden = "forbidden";
+let enable = false;
 
 function postUpdatedState(port: chrome.runtime.Port) {
   port.postMessage({
@@ -8,6 +9,7 @@ function postUpdatedState(port: chrome.runtime.Port) {
     allow: allow,
     forbidden: forbidden,
     allowOrForbidden: allowOrForbidden,
+    enable: enable,
   });
 }
 
@@ -26,6 +28,10 @@ chrome.runtime.onConnect.addListener(function(port) {
     }
     else if (msg.typeName == "switchAllowOrForbidden") {
       allowOrForbidden = msg.allowOrForbidden;
+      postUpdatedState(port);
+    }
+    else if (msg.typeName == "enableMode") {
+      enable = msg.enable;
       postUpdatedState(port);
     }
   });
