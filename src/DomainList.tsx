@@ -5,17 +5,17 @@ export interface Props {
   setNewDomainList: (domain: string[]) => void;
 }
 
-export default (props: Props) => {
+const DomainList: React.FunctionComponent<Props> = (props: Props) => {
   const [newDomain, setNewDomain] = React.useState("");
   const newDomainEntered = (e: React.KeyboardEvent) => {
     if (e.code == "Enter") {
-      let newDomainList = [...props.list];
+      const newDomainList = [...props.list];
       newDomainList.push(newDomain);
       props.setNewDomainList(newDomainList);
     }
   };
   const removeDomain = (domain: string) => {
-    let newDomainList = props.list.filter((d) => d != domain);
+    const newDomainList = props.list.filter((d) => d != domain);
     console.log("remove:", domain);
     props.setNewDomainList(newDomainList);
   };
@@ -39,3 +39,5 @@ export default (props: Props) => {
     </ul>
   );
 };
+
+export default DomainList;
