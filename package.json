@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "prod": "webpack --config ./webpack.config.production.babel.js",
-    "dev": "webpack --config ./webpack.config.development.babel.js"
+    "dev": "webpack --config ./webpack.config.development.babel.js",
+    "fmt": "prettier 'src/**' --write --ignore-unknown"
   },
   "author": "Masaki Nakano <namachan10777@gmail.com>",
   "license": "BSL-1.0",
@@ -18,6 +19,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/webpack": "^4.41.25",
     "copy-webpack-plugin": "^7.0.0",
+    "prettier": "^2.2.1",
     "ts-loader": "^8.0.12",
     "typescript": "^4.1.3",
     "webpack": "^5.10.2",

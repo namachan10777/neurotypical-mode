@@ -4,4 +4,4 @@ import App from "./App";
 
 let port = chrome.runtime.connect("kdlolnhobojjgamhfdcmmanlinacgofa");
 
-ReactDOM.render(<App port={port}/>, document.getElementById("root"));
+ReactDOM.render(<App port={port} />, document.getElementById("root"));
