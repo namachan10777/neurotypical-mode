@@ -7,6 +7,7 @@
     "prod": "webpack --config ./webpack.config.production.babel.js",
     "dev": "webpack --config ./webpack.config.development.babel.js",
     "fmt": "prettier 'src/**' --write --ignore-unknown",
+    "fmt-check": "prettier 'src/**' --check",
     "lint": "eslint 'src/**' --fix"
   },
   "author": "Masaki Nakano <namachan10777@gmail.com>",

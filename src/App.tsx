@@ -5,7 +5,7 @@ export interface Props {
   port: chrome.runtime.Port;
 }
 
-const App : React.FunctionComponent<Props> = (props: Props) => {
+const App: React.FunctionComponent<Props> = (props: Props) => {
   const [allowList, setAllowList] = React.useState([]);
   const [forbiddenList, setForbiddenList] = React.useState([]);
   const [allowOrForbidden, setAllowOrForbidden] = React.useState("forbidden");
