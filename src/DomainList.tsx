@@ -14,8 +14,17 @@ export default (props: Props) => {
       props.setNewDomainList(newDomainList);
     }
   };
+  const removeDomain = (domain: string) => {
+    let newDomainList = props.list.filter((d) => d != domain);
+    console.log("remove:", domain);
+    props.setNewDomainList(newDomainList);
+  };
   return <ul>
-    {props.list.map((domain) => (<li key={domain}>{domain}</li>))}
+    {
+      props.list.map((domain) => (
+        <li key={domain}><button onClick={() => removeDomain(domain)}>remove</button>{domain}</li>
+      ))
+    }
     <li key="$newDomain">
       <input type="text" placeholder="www.hogehoge.com" value={newDomain} onChange={(e) => setNewDomain(e.target.value)} onKeyDown={(e) => newDomainEntered(e)}/>
     </li>
