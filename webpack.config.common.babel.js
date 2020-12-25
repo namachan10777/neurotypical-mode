@@ -1,5 +1,6 @@
 import path from "path";
 import CopyPlugin from "copy-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 export default {
   mode: process.env.NODE_ENV || "development",
@@ -17,6 +18,15 @@ export default {
         test: /\.tsx?$/,
         use: "ts-loader",
         exclude: /node_modules/,
+      },
+      {
+        test: /\.(sa|c|sc)ss$/,
+        exclude: /node_modules/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: "css-loader" },
+          { loader: "postcss-loader" },
+        ]
       }
     ]
   },
@@ -33,6 +43,9 @@ export default {
       ],
       options: {
       },
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
     }),
   ],
 };
