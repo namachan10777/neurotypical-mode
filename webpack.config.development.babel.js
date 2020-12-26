@@ -7,6 +7,7 @@ import merge from "webpack-merge";
 
 export default merge(commonConfig, {
   mode: "development",
+  watch: true,
   plugins: [
     new WebpackExtensionManifestPlugin({
       config: {
