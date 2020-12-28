@@ -67,6 +67,7 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
           <DomainList
             list={allowList}
             setNewDomainList={(l) => updateDomainList("allow", l)}
+            visible={allowOrForbidden == "allow"}
           />
         </div>
         <div className="p-2">
@@ -84,6 +85,7 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
           <DomainList
             list={forbiddenList}
             setNewDomainList={(l) => updateDomainList("forbidden", l)}
+            visible={allowOrForbidden == "forbidden"}
           />
         </div>
       </div>

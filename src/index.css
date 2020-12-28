@@ -5,3 +5,12 @@
 #root {
   width: 400px;
 }
+
+.domain-list {
+  opacity: 0.3;
+  transition: all 500ms ease-out;
+}
+
+.domain-list-expanded {
+  opacity: 1;
+}
