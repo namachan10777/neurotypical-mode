@@ -23,13 +23,19 @@ const DomainList: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <ul>
       {props.list.map((domain) => (
-        <li key={domain}>
-          <button onClick={() => removeDomain(domain)}><FaTrash /></button>
+        <li className="flex justify-between text-lg py-1" key={domain}>
           {domain}
+          <button
+            className="text-purple-600 hover:text-purple-700"
+            onClick={() => removeDomain(domain)}
+          >
+            <FaTrash />
+          </button>
         </li>
       ))}
       <li key="$newDomain">
         <input
+          className="text-lg py-1 border border-transparent rounded-md ring-2 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
           type="text"
           placeholder="www.hogehoge.com"
           value={newDomain}
