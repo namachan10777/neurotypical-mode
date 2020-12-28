@@ -38,6 +38,10 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
       enable: enable,
     });
   };
+  const animation_class = (mode: string) =>
+    mode == allowOrForbidden
+      ? "domain-list domain-list-expanded"
+      : "domain-list";
   return (
     <div className="py-2 container text-lg font-sans">
       <div className="px-2">
@@ -52,7 +56,7 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
         </label>
       </div>
       <div className="m-0 py-2 flex-col justify-between divide-y divide-gray-300  divide-solid">
-        <div className="p-2">
+        <div className={"p-2" + " " + animation_class("allow")}>
           <input
             type="radio"
             id="allow"
@@ -67,10 +71,9 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
           <DomainList
             list={allowList}
             setNewDomainList={(l) => updateDomainList("allow", l)}
-            visible={allowOrForbidden == "allow"}
           />
         </div>
-        <div className="p-2">
+        <div className={"p-2" + " " + animation_class("forbidden")}>
           <input
             type="radio"
             id="forbidden"
@@ -85,7 +88,6 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
           <DomainList
             list={forbiddenList}
             setNewDomainList={(l) => updateDomainList("forbidden", l)}
-            visible={allowOrForbidden == "forbidden"}
           />
         </div>
       </div>

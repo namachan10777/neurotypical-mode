@@ -4,7 +4,6 @@ import { FaTrash } from "react-icons/fa";
 export interface Props {
   list: string[];
   setNewDomainList: (domain: string[]) => void;
-  visible: boolean;
 }
 
 const DomainList: React.FunctionComponent<Props> = (props: Props) => {
@@ -21,9 +20,8 @@ const DomainList: React.FunctionComponent<Props> = (props: Props) => {
     console.log("remove:", domain);
     props.setNewDomainList(newDomainList);
   };
-  const animation_class = props.visible ? "domain-list domain-list-expanded" : "domain-list";
   return (
-    <ul className={animation_class}>
+    <ul>
       {props.list.map((domain) => (
         <li className="flex justify-between text-lg py-1" key={domain}>
           {domain}
