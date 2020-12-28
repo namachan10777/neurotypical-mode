@@ -1,59 +1,40 @@
 import * as React from "react";
 import DomainList from "./DomainList";
-import {
-  BackgroundToFrontendMsg,
-  FrontendToBackgroundMsg,
-  AllowOrForbidden,
-} from "./msg";
+import { AllowOrForbidden, FrontendPort } from "./msg";
 
 export interface Props {
-  port: chrome.runtime.Port;
+  port: FrontendPort;
+  allowList: Array<string>;
+  forbiddenList: Array<string>;
+  allowOrForbidden: AllowOrForbidden;
+  enable: boolean;
 }
 
-const App: React.FunctionComponent<Props> = (props: Props) => {
-  const [allowList, setAllowList] = React.useState<Array<string>>([]);
-  const [forbiddenList, setForbiddenList] = React.useState<Array<string>>([]);
-  const [
-    allowOrForbidden,
-    setAllowOrForbidden,
-  ] = React.useState<AllowOrForbidden>("forbidden");
-  const [enable, setEnable] = React.useState(false);
-  props.port.onMessage.addListener(function (msg: BackgroundToFrontendMsg) {
-    if (msg.typeName == "updateState") {
-      setAllowList(msg.allow);
-      setForbiddenList(msg.forbidden);
-      setAllowOrForbidden(msg.allowOrForbidden);
-      setEnable(msg.enable);
-      console.log(msg);
-    }
-  });
+const ControlUI: React.FunctionComponent<Props> = (props: Props) => {
   const updateDomainList = (
     allowOrForbidden: AllowOrForbidden,
     domains: string[],
   ) => {
-    const msg: FrontendToBackgroundMsg = {
+    props.port({
       typeName: "updateDomainList",
       listName: allowOrForbidden,
       domains: domains,
-    };
-    props.port.postMessage(msg);
+    });
   };
   const switchAllowOrForbidden = (allowOrForbidden: AllowOrForbidden) => {
-    const msg: FrontendToBackgroundMsg = {
+    props.port({
       typeName: "switchAllowOrForbidden",
       allowOrForbidden: allowOrForbidden,
-    };
-    props.port.postMessage(msg);
+    });
   };
   const enableMode = (enable: boolean) => {
-    const msg: FrontendToBackgroundMsg = {
+    props.port({
       typeName: "enableMode",
       enable: enable,
-    };
-    props.port.postMessage(msg);
+    });
   };
   const animation_class = (mode: AllowOrForbidden) =>
-    mode == allowOrForbidden
+    mode == props.allowOrForbidden
       ? "domain-list domain-list-expanded"
       : "domain-list";
   return (
@@ -62,7 +43,7 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
         <input
           id="enable-checkbox"
           type="checkbox"
-          checked={enable}
+          checked={props.enable}
           onChange={(e) => enableMode(e.target.checked)}
         />
         <label className="mx-2" htmlFor="enable-checkbox">
@@ -76,14 +57,14 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
             id="allow"
             name="allow_or_forbidden"
             value="allow"
-            checked={allowOrForbidden == "allow"}
+            checked={props.allowOrForbidden == "allow"}
             onChange={() => switchAllowOrForbidden("allow")}
           />
           <label className="mx-2" htmlFor="allow">
             allow
           </label>
           <DomainList
-            list={allowList}
+            list={props.allowList}
             setNewDomainList={(l) => updateDomainList("allow", l)}
           />
         </div>
@@ -93,14 +74,14 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
             id="forbidden"
             name="allow_or_forbidden"
             value="forbidden"
-            checked={allowOrForbidden == "forbidden"}
+            checked={props.allowOrForbidden == "forbidden"}
             onChange={() => switchAllowOrForbidden("forbidden")}
           />
           <label className="mx-2" htmlFor="forbidden">
             forbidden
           </label>
           <DomainList
-            list={forbiddenList}
+            list={props.forbiddenList}
             setNewDomainList={(l) => updateDomainList("forbidden", l)}
           />
         </div>
@@ -109,4 +90,4 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-export default App;
+export default ControlUI;
