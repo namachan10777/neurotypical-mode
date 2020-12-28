@@ -13,6 +13,7 @@ const DomainList: React.FunctionComponent<Props> = (props: Props) => {
       const newDomainList = [...props.list];
       newDomainList.push(newDomain);
       props.setNewDomainList(newDomainList);
+      setNewDomain("");
     }
   };
   const removeDomain = (domain: string) => {
