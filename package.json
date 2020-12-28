@@ -1,6 +1,6 @@
 {
   "name": "neurotypical-mode",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Close all tabs excepts microsoft stream or manaba",
   "main": "index.js",
   "scripts": {

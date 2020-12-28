@@ -14,7 +14,6 @@ function postUpdatedState(port: chrome.runtime.Port) {
 }
 
 chrome.runtime.onConnect.addListener(function (port) {
-  console.log(port);
   postUpdatedState(port);
   port.onMessage.addListener(function (msg) {
     if (msg.typeName == "updateDomainList") {
@@ -34,20 +33,36 @@ chrome.runtime.onConnect.addListener(function (port) {
   });
 });
 
+function is_matched(url: string, list: Array<string>): boolean {
+  for (let i = 0; i < list.length; i++) {
+    const domain = list[i];
+    if (
+      url.indexOf("https://" + domain) == 0 ||
+      url.indexOf("http://" + domain) == 0
+    )
+      return true;
+  }
+  return false;
+}
+
+function is_allowed(url: string): boolean {
+  if (allowOrForbidden == "allow") {
+    return is_matched(url, allow);
+  } else {
+    return !is_matched(url, forbidden);
+  }
+}
+
 chrome.runtime.onInstalled.addListener(function () {
-  const twitterRe = /https:\/\/(tweetdeck\.)?twitter\.com.*/;
   chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
     if (changeInfo.url) {
-      console.log(changeInfo.url);
-      if (twitterRe.test(changeInfo.url)) {
-        console.log("close");
+      if (enable && !is_allowed(changeInfo.url)) {
         chrome.tabs.remove(tabId);
       }
     }
   });
   chrome.tabs.onCreated.addListener(function (tab) {
-    console.log(tab.url);
-    if (tab.id && tab.url && twitterRe.test(tab.url)) {
+    if (enable && tab.id && tab.url && !is_allowed(tab.url)) {
       chrome.tabs.remove(tab.id);
     }
   });
