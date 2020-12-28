@@ -1,4 +1,5 @@
 import * as React from "react";
+import { FaTrash } from "react-icons/fa";
 
 export interface Props {
   list: string[];
@@ -23,7 +24,7 @@ const DomainList: React.FunctionComponent<Props> = (props: Props) => {
     <ul>
       {props.list.map((domain) => (
         <li key={domain}>
-          <button onClick={() => removeDomain(domain)}>remove</button>
+          <button onClick={() => removeDomain(domain)}><FaTrash /></button>
           {domain}
         </li>
       ))}
