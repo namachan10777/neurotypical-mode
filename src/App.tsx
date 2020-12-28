@@ -39,7 +39,7 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
     });
   };
   return (
-    <div>
+    <div className="container">
       <input
         id="enable-checkbox"
         type="checkbox"
