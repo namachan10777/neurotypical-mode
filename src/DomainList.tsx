@@ -24,7 +24,6 @@ const DomainList: React.FunctionComponent<Props> = (props: Props) => {
   };
   const removeDomain = (domain: string) => {
     const newDomainList = props.list.filter((d) => d != domain);
-    console.log("remove:", domain);
     props.setNewDomainList(newDomainList);
   };
   const okIcon = (
