@@ -1,16 +1,24 @@
 import * as React from "react";
 import DomainList from "./DomainList";
+import {
+  BackgroundToFrontendMsg,
+  FrontendToBackgroundMsg,
+  AllowOrForbidden,
+} from "./msg";
 
 export interface Props {
   port: chrome.runtime.Port;
 }
 
 const App: React.FunctionComponent<Props> = (props: Props) => {
-  const [allowList, setAllowList] = React.useState([]);
-  const [forbiddenList, setForbiddenList] = React.useState([]);
-  const [allowOrForbidden, setAllowOrForbidden] = React.useState("forbidden");
+  const [allowList, setAllowList] = React.useState<Array<string>>([]);
+  const [forbiddenList, setForbiddenList] = React.useState<Array<string>>([]);
+  const [
+    allowOrForbidden,
+    setAllowOrForbidden,
+  ] = React.useState<AllowOrForbidden>("forbidden");
   const [enable, setEnable] = React.useState(false);
-  props.port.onMessage.addListener(function (msg) {
+  props.port.onMessage.addListener(function (msg: BackgroundToFrontendMsg) {
     if (msg.typeName == "updateState") {
       setAllowList(msg.allow);
       setForbiddenList(msg.forbidden);
@@ -19,26 +27,32 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
       console.log(msg);
     }
   });
-  const updateDomainList = (allowOrForbidden: string, domains: string[]) => {
-    props.port.postMessage({
+  const updateDomainList = (
+    allowOrForbidden: AllowOrForbidden,
+    domains: string[],
+  ) => {
+    const msg: FrontendToBackgroundMsg = {
       typeName: "updateDomainList",
       listName: allowOrForbidden,
       domains: domains,
-    });
+    };
+    props.port.postMessage(msg);
   };
-  const switchAllowOrForbidden = (allowOrForbidden: string) => {
-    props.port.postMessage({
+  const switchAllowOrForbidden = (allowOrForbidden: AllowOrForbidden) => {
+    const msg: FrontendToBackgroundMsg = {
       typeName: "switchAllowOrForbidden",
       allowOrForbidden: allowOrForbidden,
-    });
+    };
+    props.port.postMessage(msg);
   };
   const enableMode = (enable: boolean) => {
-    props.port.postMessage({
+    const msg: FrontendToBackgroundMsg = {
       typeName: "enableMode",
       enable: enable,
-    });
+    };
+    props.port.postMessage(msg);
   };
-  const animation_class = (mode: string) =>
+  const animation_class = (mode: AllowOrForbidden) =>
     mode == allowOrForbidden
       ? "domain-list domain-list-expanded"
       : "domain-list";

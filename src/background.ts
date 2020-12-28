@@ -1,21 +1,28 @@
+import {
+  FrontendToBackgroundMsg,
+  BackgroundToFrontendMsg,
+  AllowOrForbidden,
+} from "./msg";
+
 let allow = ["manaba.tsukuba.ac.jp", "web.microsoftstream.com"];
 let forbidden = ["tweetdeck.twitter.com", "twitter.com"];
-let allowOrForbidden = "forbidden";
+let allowOrForbidden: AllowOrForbidden = "forbidden";
 let enable = false;
 
 function postUpdatedState(port: chrome.runtime.Port) {
-  port.postMessage({
+  const msg: BackgroundToFrontendMsg = {
     typeName: "updateState",
     allow: allow,
     forbidden: forbidden,
     allowOrForbidden: allowOrForbidden,
     enable: enable,
-  });
+  };
+  port.postMessage(msg);
 }
 
 chrome.runtime.onConnect.addListener(function (port) {
   postUpdatedState(port);
-  port.onMessage.addListener(function (msg) {
+  port.onMessage.addListener(function (msg: FrontendToBackgroundMsg) {
     if (msg.typeName == "updateDomainList") {
       if (msg.listName == "allow") {
         allow = msg.domains;
