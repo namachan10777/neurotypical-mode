@@ -114,7 +114,12 @@ chrome.runtime.onInstalled.addListener(function () {
   chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
     if (changeInfo.url) {
       if (running && !is_allowed(changeInfo.url)) {
-        chrome.tabs.remove(tabId);
+        chrome.tabs.query({}, function (tabs) {
+          if (tabs.length < 2) {
+            chrome.tabs.create({});
+          }
+          chrome.tabs.remove(tabId);
+        });
       }
     }
   });
