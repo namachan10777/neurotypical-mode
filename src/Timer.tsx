@@ -45,9 +45,13 @@ const Timer: React.FunctionComponent<Props> = (props: Props) => {
       typeName: "runTimer",
     });
   };
+  const zeroPadding = (n: number) => ("0" + n.toString()).slice(-2);
+  const hour = zeroPadding(Math.floor(props.secs / 60 / 60));
+  const minute = zeroPadding(Math.floor(props.secs / 60) % 60);
+  const second = zeroPadding(props.secs % 60);
   return (
     <div className="flex flex-row items-center">
-      <span className="font-mono">{props.secs}</span>
+      <span className="font-mono">{hour}:{minute}:{second}</span>
       {props.running ? (
         <StopButton onClick={() => stopTimer()} />
       ) : (
