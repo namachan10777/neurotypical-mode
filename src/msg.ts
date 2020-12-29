@@ -1,11 +1,25 @@
 export type AllowOrForbidden = "allow" | "forbidden";
 
+export type SetTimer = {
+  typeName: "setTimer";
+  secs: number;
+};
+
+export type RunTimer = {
+  typeName: "runTimer";
+};
+
+export type StopTimer = {
+  typeName: "stopTimer";
+};
+
 export type UpdateStateMsg = {
   typeName: "updateState";
   allow: Array<string>;
   forbidden: Array<string>;
   allowOrForbidden: AllowOrForbidden;
-  enable: boolean;
+  secs: number;
+  running: boolean;
 };
 
 export type UpdateDomainListMsg = {
@@ -19,15 +33,12 @@ export type SwitchAllowOrForbiddenMsg = {
   allowOrForbidden: AllowOrForbidden;
 };
 
-export type EnableModeMsg = {
-  typeName: "enableMode";
-  enable: boolean;
-};
-
 export type BackgroundToFrontendMsg = UpdateStateMsg;
 export type FrontendToBackgroundMsg =
   | UpdateDomainListMsg
   | SwitchAllowOrForbiddenMsg
-  | EnableModeMsg;
+  | SetTimer
+  | StopTimer
+  | RunTimer;
 
 export type FrontendPort = (msg: FrontendToBackgroundMsg) => void;

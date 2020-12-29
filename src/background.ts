@@ -7,37 +7,65 @@ import {
 let allow = ["manaba.tsukuba.ac.jp", "web.microsoftstream.com"];
 let forbidden = ["tweetdeck.twitter.com", "twitter.com"];
 let allowOrForbidden: AllowOrForbidden = "forbidden";
-let enable = false;
+let secs = 1 * 60 * 60;
+let running = false;
+let timerId: null | number = null;
+let chromeExtPort: chrome.runtime.Port | null = null;
 
-function postUpdatedState(port: chrome.runtime.Port) {
+function postUpdatedState() {
   const msg: BackgroundToFrontendMsg = {
     typeName: "updateState",
     allow: allow,
     forbidden: forbidden,
     allowOrForbidden: allowOrForbidden,
-    enable: enable,
+    secs: secs,
+    running: running,
   };
-  port.postMessage(msg);
+  if (chromeExtPort) {
+    chromeExtPort.postMessage(msg);
+  }
+}
+
+function processIncomingMsgs(msg: FrontendToBackgroundMsg) {
+  if (msg.typeName == "updateDomainList") {
+    if (msg.listName == "allow") {
+      allow = msg.domains;
+    } else if (msg.listName == "forbidden") {
+      forbidden = msg.domains;
+    }
+    postUpdatedState();
+  } else if (msg.typeName == "switchAllowOrForbidden") {
+    allowOrForbidden = msg.allowOrForbidden;
+    postUpdatedState();
+  } else if (msg.typeName == "setTimer" && !running) {
+    secs = msg.secs;
+  } else if (msg.typeName == "runTimer" && !running) {
+    running = true;
+    timerId = window.setInterval(function () {
+      if (secs > 0) {
+        secs--;
+      } else {
+        running = false;
+        if (timerId) clearInterval(timerId);
+      }
+      postUpdatedState();
+    }, 1000);
+    postUpdatedState();
+  } else if (msg.typeName == "stopTimer" && running) {
+    running = false;
+    if (timerId) {
+      clearInterval(timerId);
+    }
+  }
 }
 
 chrome.runtime.onConnect.addListener(function (port) {
-  postUpdatedState(port);
-  port.onMessage.addListener(function (msg: FrontendToBackgroundMsg) {
-    if (msg.typeName == "updateDomainList") {
-      if (msg.listName == "allow") {
-        allow = msg.domains;
-      } else if (msg.listName == "forbidden") {
-        forbidden = msg.domains;
-      }
-      postUpdatedState(port);
-    } else if (msg.typeName == "switchAllowOrForbidden") {
-      allowOrForbidden = msg.allowOrForbidden;
-      postUpdatedState(port);
-    } else if (msg.typeName == "enableMode") {
-      enable = msg.enable;
-      postUpdatedState(port);
-    }
+  chromeExtPort = port;
+  postUpdatedState();
+  port.onDisconnect.addListener(function () {
+    chromeExtPort = null;
   });
+  port.onMessage.addListener(processIncomingMsgs);
 });
 
 function is_matched(url: string, list: Array<string>): boolean {
@@ -63,13 +91,13 @@ function is_allowed(url: string): boolean {
 chrome.runtime.onInstalled.addListener(function () {
   chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
     if (changeInfo.url) {
-      if (enable && !is_allowed(changeInfo.url)) {
+      if (running && !is_allowed(changeInfo.url)) {
         chrome.tabs.remove(tabId);
       }
     }
   });
   chrome.tabs.onCreated.addListener(function (tab) {
-    if (enable && tab.id && tab.url && !is_allowed(tab.url)) {
+    if (running && tab.id && tab.url && !is_allowed(tab.url)) {
       chrome.tabs.remove(tab.id);
     }
   });
