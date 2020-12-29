@@ -53,6 +53,7 @@ function processIncomingMsgs(msg: FrontendToBackgroundMsg) {
     postUpdatedState();
   } else if (msg.typeName == "stopTimer" && running) {
     running = false;
+    postUpdatedState();
     if (timerId) {
       clearInterval(timerId);
     }
