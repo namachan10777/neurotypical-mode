@@ -9,12 +9,13 @@ export interface Props {
   forbiddenList: Array<string>;
   allowOrForbidden: AllowOrForbidden;
   secs: number;
+  running: boolean;
 }
 
 const ControlUI: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <div className="py-2 container text-lg font-sans">
-      <Timer secs={props.secs} port={props.port} />
+      <Timer secs={props.secs} port={props.port} running={props.running} />
       <div className="m-0 py-2 flex-col justify-between divide-y divide-gray-300  divide-solid">
         <DomainSetting
           port={props.port}

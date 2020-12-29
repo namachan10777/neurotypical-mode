@@ -22,6 +22,7 @@ const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
     setAllowOrForbidden,
   ] = React.useState<AllowOrForbidden>("forbidden");
   const [secs, setSecs] = React.useState(0);
+  const [running, setRunning] = React.useState(false);
   props.port.onMessage.addListener(function (msg: BackgroundToFrontendMsg) {
     if (msg.typeName == "updateState") {
       setAllowList(msg.allow);
@@ -29,6 +30,7 @@ const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
       setAllowOrForbidden(msg.allowOrForbidden);
       setSecs(msg.secs);
       console.log(msg);
+      setRunning(msg.running);
     }
   });
   const port = function (msg: FrontendToBackgroundMsg) {
@@ -41,6 +43,7 @@ const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
       port={port}
       allowOrForbidden={allowOrForbidden}
       secs={secs}
+      running={running}
     />
   );
 };

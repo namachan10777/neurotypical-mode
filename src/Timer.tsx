@@ -3,6 +3,7 @@ import { FrontendPort } from "./msg";
 
 export interface Props {
   secs: number;
+  running: boolean;
   port: FrontendPort;
 }
 
@@ -20,8 +21,11 @@ const Timer: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <div>
       {props.secs}
-      <button onClick={() => runTimer()}>Run</button>
-      <button onClick={() => stopTimer()}>Stop</button>
+      {props.running ? (
+        <button onClick={() => stopTimer()}>Stop</button>
+      ) : (
+        <button onClick={() => runTimer()}>Run</button>
+      )}
     </div>
   );
 };
