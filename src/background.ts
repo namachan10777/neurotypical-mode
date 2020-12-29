@@ -36,6 +36,7 @@ function processIncomingMsgs(msg: FrontendToBackgroundMsg) {
     postUpdatedState();
   } else if (msg.typeName == "switchAllowOrForbidden") {
     allowOrForbidden = msg.allowOrForbidden;
+    closeAllInvalidTab();
     postUpdatedState();
   } else if (msg.typeName == "setTimer" && !running) {
     secs = msg.secs;
@@ -51,6 +52,7 @@ function processIncomingMsgs(msg: FrontendToBackgroundMsg) {
       }
       postUpdatedState();
     }, 1000);
+    closeAllInvalidTab();
     postUpdatedState();
   } else if (msg.typeName == "stopTimer" && running) {
     running = false;
@@ -88,6 +90,24 @@ function is_allowed(url: string): boolean {
   } else {
     return !is_matched(url, forbidden);
   }
+}
+
+function closeAllInvalidTab() {
+  chrome.tabs.query({}, function (tabs) {
+    let forbiddenId = [];
+    for (let i = 0; i < tabs.length; i++) {
+      const tab = tabs[i];
+      if (tab.id && tab.url && !is_allowed(tab.url)) {
+        forbiddenId.push(tab.id);
+      }
+    }
+    if (forbiddenId.length == tabs.length) {
+      chrome.tabs.create({});
+    }
+    for (let i = 0; i < forbiddenId.length; ++i) {
+      chrome.tabs.remove(forbiddenId[i]);
+    }
+  });
 }
 
 chrome.runtime.onInstalled.addListener(function () {
