@@ -39,6 +39,7 @@ function processIncomingMsgs(msg: FrontendToBackgroundMsg) {
     postUpdatedState();
   } else if (msg.typeName == "setTimer" && !running) {
     secs = msg.secs;
+    postUpdatedState();
   } else if (msg.typeName == "runTimer" && !running) {
     running = true;
     timerId = window.setInterval(function () {
