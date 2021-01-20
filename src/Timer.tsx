@@ -9,7 +9,7 @@ interface ToggleProps {
 const PlayButton: React.FC<ToggleProps> = (props: ToggleProps) => {
   return (
     <button
-      className="ml-1 focus:outline-none text-green-600"
+      className="mr-4 ml-1 focus:outline-none text-green-600 text-sm"
       onClick={props.onClick}
     >
       <FaPlay />
@@ -20,7 +20,7 @@ const PlayButton: React.FC<ToggleProps> = (props: ToggleProps) => {
 const StopButton: React.FC<ToggleProps> = (props: ToggleProps) => {
   return (
     <button
-      className="ml-1 focus:outline-none text-red-600"
+      className="mr-4 ml-1 focus:outline-none text-red-600 text-sm"
       onClick={props.onClick}
     >
       <FaStop />
@@ -68,16 +68,21 @@ const Timer: React.FunctionComponent<Props> = (props: Props) => {
   if (props.running) {
     return (
       <div className="flex flex-row items-center">
-        <span className="font-mono">
-          {zeroPadding(hour)}:{zeroPadding(minute)}:{zeroPadding(second)}
-        </span>
         <StopButton onClick={() => stopTimer()} />
+        <span className="font-mono text-lg">
+          <span className="w-10">{zeroPadding(hour)}</span>
+          :
+          <span className="w-10">{zeroPadding(minute)}</span>
+          :
+          <span className="w-10">{zeroPadding(second)}</span>
+        </span>
       </div>
     );
   } else {
     return (
       <div className="flex flex-row items-center">
-        <span className="font-mono">
+        <PlayButton onClick={() => runTimer()} />
+        <span className="font-mono text-lg x">
           <input
             className="w-10"
             type="number"
@@ -99,7 +104,6 @@ const Timer: React.FunctionComponent<Props> = (props: Props) => {
             onChange={(e) => changeSecond(parseInt(e.target.value, 10))}
           />
         </span>
-        <PlayButton onClick={() => runTimer()} />
       </div>
     );
   }
