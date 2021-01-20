@@ -4,62 +4,80 @@ import {
   AllowOrForbidden,
 } from "./msg";
 
-let allow = ["manaba.tsukuba.ac.jp", "web.microsoftstream.com"];
-let forbidden = ["tweetdeck.twitter.com", "twitter.com"];
-let allowOrForbidden: AllowOrForbidden = "forbidden";
-let secs = 1 * 60 * 60;
-let running = false;
+type State = {
+  allow: Array<string>;
+  forbidden: Array<string>;
+  allowOrForbidden: AllowOrForbidden;
+  secs: number;
+  running: boolean;
+};
+
+let state: State = {
+  allow : ["manaba.tsukuba.ac.jp", "web.microsoftstream.com"],
+  forbidden : ["tweetdeck.twitter.com", "twitter.com"],
+  allowOrForbidden: "forbidden",
+  secs : 1 * 60 * 60,
+  running : false,
+};
 let timerId: null | number = null;
 let chromeExtPort: chrome.runtime.Port | null = null;
 
 function postUpdatedState() {
   const msg: BackgroundToFrontendMsg = {
     typeName: "updateState",
-    allow: allow,
-    forbidden: forbidden,
-    allowOrForbidden: allowOrForbidden,
-    secs: secs,
-    running: running,
+    allow: state.allow,
+    forbidden: state.forbidden,
+    allowOrForbidden: state.allowOrForbidden,
+    secs: state.secs,
+    running: state.running,
   };
   if (chromeExtPort) {
     chromeExtPort.postMessage(msg);
   }
 }
 
+function startTimer() {
+  timerId = window.setInterval(function () {
+    if (state.secs > 0) {
+      state.secs--;
+    } else {
+      state.running = false;
+      if (timerId) clearInterval(timerId);
+    }
+    postUpdatedState();
+  }, 1000);
+  closeAllInvalidTab();
+}
+
+function stopTimer() {
+  if (timerId) {
+    clearInterval(timerId);
+  }
+}
+
 function processIncomingMsgs(msg: FrontendToBackgroundMsg) {
   if (msg.typeName == "updateDomainList") {
     if (msg.listName == "allow") {
-      allow = msg.domains;
+      state.allow = msg.domains;
     } else if (msg.listName == "forbidden") {
-      forbidden = msg.domains;
+      state.forbidden = msg.domains;
     }
     postUpdatedState();
   } else if (msg.typeName == "switchAllowOrForbidden") {
-    allowOrForbidden = msg.allowOrForbidden;
+    state.allowOrForbidden = msg.allowOrForbidden;
     closeAllInvalidTab();
     postUpdatedState();
-  } else if (msg.typeName == "setTimer" && !running) {
-    secs = msg.secs;
+  } else if (msg.typeName == "setTimer" && !state.running) {
+    state.secs = msg.secs;
     postUpdatedState();
-  } else if (msg.typeName == "runTimer" && !running) {
-    running = true;
-    timerId = window.setInterval(function () {
-      if (secs > 0) {
-        secs--;
-      } else {
-        running = false;
-        if (timerId) clearInterval(timerId);
-      }
-      postUpdatedState();
-    }, 1000);
-    closeAllInvalidTab();
+  } else if (msg.typeName == "runTimer" && !state.running) {
+    state.running = true;
+    startTimer();
     postUpdatedState();
-  } else if (msg.typeName == "stopTimer" && running) {
-    running = false;
+  } else if (msg.typeName == "stopTimer" && state.running) {
+    state.running = false;
     postUpdatedState();
-    if (timerId) {
-      clearInterval(timerId);
-    }
+    stopTimer();
   }
 }
 
@@ -87,10 +105,10 @@ function is_matched(url: string, list: Array<string>): boolean {
 function is_allowed(url: string): boolean {
   if (url.startsWith("chrome://"))
     return true;
-  if (allowOrForbidden == "allow") {
-    return is_matched(url, allow);
+  if (state.allowOrForbidden == "allow") {
+    return is_matched(url, state.allow);
   } else {
-    return !is_matched(url, forbidden);
+    return !is_matched(url, state.forbidden);
   }
 }
 
@@ -115,7 +133,7 @@ function closeAllInvalidTab() {
 chrome.runtime.onInstalled.addListener(function () {
   chrome.tabs.onUpdated.addListener(function (tabId, changeInfo) {
     if (changeInfo.url) {
-      if (running && !is_allowed(changeInfo.url)) {
+      if (state.running && !is_allowed(changeInfo.url)) {
         chrome.tabs.query({}, function (tabs) {
           if (tabs.length < 2) {
             chrome.tabs.goBack(tabId);
@@ -128,7 +146,7 @@ chrome.runtime.onInstalled.addListener(function () {
     }
   });
   chrome.tabs.onCreated.addListener(function (tab) {
-    if (running && tab.id && tab.url && !is_allowed(tab.url)) {
+    if (state.running && tab.id && tab.url && !is_allowed(tab.url)) {
       chrome.tabs.remove(tab.id);
     }
   });
