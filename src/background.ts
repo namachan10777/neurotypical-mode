@@ -13,11 +13,11 @@ type State = {
 };
 
 let state: State = {
-  allow : ["manaba.tsukuba.ac.jp", "web.microsoftstream.com"],
-  forbidden : ["tweetdeck.twitter.com", "twitter.com"],
+  allow: ["manaba.tsukuba.ac.jp", "web.microsoftstream.com"],
+  forbidden: ["tweetdeck.twitter.com", "twitter.com"],
   allowOrForbidden: "forbidden",
-  secs : 1 * 60 * 60,
-  running : false,
+  secs: 1 * 60 * 60,
+  running: false,
 };
 let timerId: null | number = null;
 let chromeExtPort: chrome.runtime.Port | null = null;
@@ -31,6 +31,8 @@ function postUpdatedState() {
     secs: state.secs,
     running: state.running,
   };
+  localStorage.setItem("state", JSON.stringify(state));
+  localStorage.setItem("timestamp", Date.now().toString());
   if (chromeExtPort) {
     chromeExtPort.postMessage(msg);
   }
@@ -103,8 +105,7 @@ function is_matched(url: string, list: Array<string>): boolean {
 }
 
 function is_allowed(url: string): boolean {
-  if (url.startsWith("chrome://"))
-    return true;
+  if (url.startsWith("chrome://")) return true;
   if (state.allowOrForbidden == "allow") {
     return is_matched(url, state.allow);
   } else {
@@ -114,7 +115,7 @@ function is_allowed(url: string): boolean {
 
 function closeAllInvalidTab() {
   chrome.tabs.query({}, function (tabs) {
-    let forbiddenId = [];
+    const forbiddenId = [];
     for (let i = 0; i < tabs.length; i++) {
       const tab = tabs[i];
       if (tab.id && tab.url && !is_allowed(tab.url)) {
@@ -137,8 +138,7 @@ chrome.runtime.onInstalled.addListener(function () {
         chrome.tabs.query({}, function (tabs) {
           if (tabs.length < 2) {
             chrome.tabs.goBack(tabId);
-          }
-          else {
+          } else {
             chrome.tabs.remove(tabId);
           }
         });
@@ -150,4 +150,18 @@ chrome.runtime.onInstalled.addListener(function () {
       chrome.tabs.remove(tab.id);
     }
   });
+});
+
+// TODO: verify state
+chrome.runtime.onStartup.addListener(function () {
+  const state_str = localStorage.getItem("state");
+  const timestamp_str = localStorage.getItem("timestamp");
+  if (state_str && timestamp_str) {
+    state = JSON.parse(state_str);
+    state.secs = Math.max(
+      0,
+      state.secs - (Date.now() - parseInt(timestamp_str, 10)),
+    );
+  }
+  postUpdatedState();
 });
