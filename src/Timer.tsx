@@ -70,10 +70,8 @@ const Timer: React.FunctionComponent<Props> = (props: Props) => {
       <div className="flex flex-row items-center">
         <StopButton onClick={() => stopTimer()} />
         <span className="font-mono text-lg">
-          <span className="w-10">{zeroPadding(hour)}</span>
-          :
-          <span className="w-10">{zeroPadding(minute)}</span>
-          :
+          <span className="w-10">{zeroPadding(hour)}</span>:
+          <span className="w-10">{zeroPadding(minute)}</span>:
           <span className="w-10">{zeroPadding(second)}</span>
         </span>
       </div>
