@@ -85,6 +85,8 @@ function is_matched(url: string, list: Array<string>): boolean {
 }
 
 function is_allowed(url: string): boolean {
+  if (url.startsWith("chrome://"))
+    return true;
   if (allowOrForbidden == "allow") {
     return is_matched(url, allow);
   } else {
