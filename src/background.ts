@@ -126,7 +126,7 @@ function closeAllInvalidTab() {
       chrome.tabs.create({});
     }
     for (let i = 0; i < forbiddenId.length; ++i) {
-      chrome.tabs.remove(forbiddenId[i]);
+      chrome.tabs.goBack(forbiddenId[i]);
     }
   });
 }
@@ -139,7 +139,7 @@ chrome.runtime.onInstalled.addListener(function () {
           if (tabs.length < 2) {
             chrome.tabs.goBack(tabId);
           } else {
-            chrome.tabs.remove(tabId);
+            chrome.tabs.goBack(tabId);
           }
         });
       }
@@ -147,7 +147,7 @@ chrome.runtime.onInstalled.addListener(function () {
   });
   chrome.tabs.onCreated.addListener(function (tab) {
     if (state.running && tab.id && tab.url && !is_allowed(tab.url)) {
-      chrome.tabs.remove(tab.id);
+      chrome.tabs.goBack(tab.id);
     }
   });
 });
