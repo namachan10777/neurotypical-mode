@@ -13,8 +13,8 @@
   "author": "Masaki Nakano <namachan10777@gmail.com>",
   "license": "BSL-1.0",
   "devDependencies": {
-    "@babel/core": "7.13.16",
-    "@babel/preset-env": "7.13.15",
+    "@babel/core": "7.14.0",
+    "@babel/preset-env": "7.14.0",
     "@babel/register": "7.13.16",
     "@types/chrome": "0.0.134",
     "@types/react": "17.0.4",
