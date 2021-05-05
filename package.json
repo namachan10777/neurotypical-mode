@@ -17,7 +17,7 @@
     "@babel/preset-env": "7.14.1",
     "@babel/register": "7.13.16",
     "@types/chrome": "0.0.134",
-    "@types/react": "17.0.4",
+    "@types/react": "17.0.5",
     "@types/react-dom": "17.0.3",
     "@types/webpack": "5.28.0",
     "@typescript-eslint/eslint-plugin": "4.22.1",
