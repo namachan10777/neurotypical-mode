@@ -36,7 +36,7 @@
     "webpack-merge": "5.8.0"
   },
   "dependencies": {
-    "css-loader": "^6.0.0",
+    "css-loader": "^6.1.0",
     "mini-css-extract-plugin": "^2.1.0",
     "postcss-loader": "^6.1.0",
     "react": "^17.0.2",
