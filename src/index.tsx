@@ -17,10 +17,8 @@ interface AppProps {
 const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
   const [allowList, setAllowList] = React.useState<Array<string>>([]);
   const [forbiddenList, setForbiddenList] = React.useState<Array<string>>([]);
-  const [
-    allowOrForbidden,
-    setAllowOrForbidden,
-  ] = React.useState<AllowOrForbidden>("forbidden");
+  const [allowOrForbidden, setAllowOrForbidden] =
+    React.useState<AllowOrForbidden>("forbidden");
   const [secs, setSecs] = React.useState(0);
   const [running, setRunning] = React.useState(false);
   props.port.onMessage.addListener(function (msg: BackgroundToFrontendMsg) {

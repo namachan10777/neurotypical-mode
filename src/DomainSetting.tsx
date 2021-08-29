@@ -3,7 +3,8 @@ import { FaTrash } from "react-icons/fa";
 import { MdBlock, MdDone } from "react-icons/md";
 import { AllowOrForbidden, FrontendPort } from "./msg";
 
-const domainRe = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/;
+const domainRe =
+  /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/;
 
 const okIcon = (
   <span className="text-2xl mx-2 text-green-700">
