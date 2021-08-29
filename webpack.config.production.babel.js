@@ -1,5 +1,5 @@
 import path from "path";
-import WebpackExtensionManifestPlugin from 'webpack-extension-manifest-plugin';
+import WebpackExtensionManifestPlugin from "webpack-extension-manifest-plugin";
 import baseManifest from "./manifest.js";
 import commonConfig from "./webpack.config.common.babel";
 import pkg from "./package.json";
@@ -16,7 +16,7 @@ export default merge(commonConfig, {
           name: pkg.name,
           description: pkg.description,
         },
-      }
+      },
     }),
   ],
 });

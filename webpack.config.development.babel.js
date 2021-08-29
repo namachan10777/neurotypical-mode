@@ -1,5 +1,5 @@
 import path from "path";
-import WebpackExtensionManifestPlugin from 'webpack-extension-manifest-plugin';
+import WebpackExtensionManifestPlugin from "webpack-extension-manifest-plugin";
 import baseManifest from "./manifest.js";
 import commonConfig from "./webpack.config.common.babel";
 import pkg from "./package.json";
@@ -16,9 +16,10 @@ export default merge(commonConfig, {
           version: pkg.version,
           name: pkg.name,
           description: pkg.description,
-          content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'",
+          content_security_policy:
+            "script-src 'self' 'unsafe-eval'; object-src 'self'",
         },
-      }
+      },
     }),
   ],
 });

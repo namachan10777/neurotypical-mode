@@ -1,8 +1,5 @@
 module.exports = {
-  purge: [
-    './src/**/*.tsx',
-    './src/**/*.ts',
-  ],
+  purge: ["./src/**/*.tsx", "./src/**/*.ts"],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
@@ -11,4 +8,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
+};

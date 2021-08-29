@@ -6,5 +6,5 @@ export default {
   browser_action: {
     default_popup: "index.html",
   },
-  permissions: ["tabs"]
+  permissions: ["tabs"],
 };

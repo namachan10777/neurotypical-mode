@@ -26,9 +26,9 @@ export default {
           MiniCssExtractPlugin.loader,
           { loader: "css-loader" },
           { loader: "postcss-loader" },
-        ]
-      }
-    ]
+        ],
+      },
+    ],
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
@@ -38,14 +38,13 @@ export default {
       patterns: [
         {
           from: "public",
-          to: "."
-        }
+          to: ".",
+        },
       ],
-      options: {
-      },
+      options: {},
     }),
     new MiniCssExtractPlugin({
-      filename: 'style.css',
+      filename: "style.css",
     }),
   ],
 };
