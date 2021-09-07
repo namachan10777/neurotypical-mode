@@ -16,7 +16,7 @@
     "@babel/core": "7.15.5",
     "@babel/preset-env": "7.15.4",
     "@babel/register": "7.15.3",
-    "@types/chrome": "0.0.156",
+    "@types/chrome": "0.0.157",
     "@types/react": "17.0.20",
     "@types/react-dom": "17.0.9",
     "@types/webpack": "5.28.0",
