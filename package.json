@@ -4,7 +4,7 @@
   "description": "Close all tabs excepts microsoft stream or manaba",
   "main": "index.js",
   "scripts": {
-    "prod": "webpack --config ./webpack.config.production.babel.js",
+    "prod": "webpack --config ./webpack.config.production.babel.js && zip -r neurotypical-mode.zip dist/*",
     "dev": "webpack --config ./webpack.config.development.babel.js",
     "fmt": "prettier 'src/**' --write --ignore-unknown",
     "fmt-check": "prettier 'src/**' --check",
@@ -16,6 +16,7 @@
     "@babel/core": "7.15.8",
     "@babel/preset-env": "7.15.8",
     "@babel/register": "7.15.3",
+    "@fullhuman/postcss-purgecss": "^4.0.3",
     "@types/chrome": "0.0.161",
     "@types/react": "17.0.33",
     "@types/react-dom": "17.0.10",
