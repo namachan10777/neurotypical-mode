@@ -13,7 +13,7 @@
   "author": "Masaki Nakano <namachan10777@gmail.com>",
   "license": "BSL-1.0",
   "devDependencies": {
-    "@babel/core": "7.20.5",
+    "@babel/core": "7.20.7",
     "@babel/preset-env": "7.20.2",
     "@babel/register": "7.18.9",
     "@fullhuman/postcss-purgecss": "^4.1.3",
