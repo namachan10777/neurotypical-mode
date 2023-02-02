@@ -16,7 +16,7 @@ jobs:
     - run: npm ci
     - run: npm run prod
     - name: Upload zip file to release
-      uses: svenstaro/upload-release-action@2.4.0
+      uses: svenstaro/upload-release-action@2.4.1
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: neurotypical-mode.zip 
