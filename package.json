@@ -4,10 +4,10 @@
   "description": "Close all tabs excepts microsoft stream or manaba",
   "main": "index.js",
   "scripts": {
-    "prod": "webpack --config ./webpack.config.production.babel.js && zip -r neurotypical-mode.zip dist/*",
-    "dev": "webpack --config ./webpack.config.development.babel.js",
-    "fmt": "prettier 'src/**' --write --ignore-unknown",
-    "fmt-check": "prettier 'src/**' --check",
+    "prod": "webpack --config ./webpack.config.production.babel.mjs && zip -r neurotypical-mode.zip dist/*",
+    "dev": "webpack --config ./webpack.config.development.babel.mjs",
+    "fmt": "prettier . --write --ignore-unknown",
+    "fmt-check": "prettier . --check",
     "lint": "eslint 'src/**' --fix"
   },
   "author": "Masaki Nakano <namachan10777@gmail.com>",

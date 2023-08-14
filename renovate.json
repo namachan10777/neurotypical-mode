@@ -1,13 +1,10 @@
 {
-  "extends": [
-    "config:base",
-    ":timezone(Asia/Tokyo)"
-  ],
+  "extends": ["config:base", ":timezone(Asia/Tokyo)"],
   "labels": ["dependencies", "renovate"],
   "schedule": ["after 10pm and before 5am"],
   "dependencyDashboard": true,
   "pin": {
-      "automerge": true
+    "automerge": true
   },
   "npm": {
     "rangeStrategy": "bump"

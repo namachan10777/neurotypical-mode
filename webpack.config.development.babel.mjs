@@ -1,9 +1,9 @@
 import path from "path";
 import WebpackExtensionManifestPlugin from "webpack-extension-manifest-plugin";
-import baseManifest from "./manifest.js";
-import commonConfig from "./webpack.config.common.babel";
-import pkg from "./package.json";
-import merge from "webpack-merge";
+import baseManifest from "./manifest.mjs";
+import commonConfig from "./webpack.config.common.babel.mjs";
+import pkg from "./package.json" assert { type: "json" };
+import { merge } from "webpack-merge";
 
 export default merge(commonConfig, {
   mode: "development",

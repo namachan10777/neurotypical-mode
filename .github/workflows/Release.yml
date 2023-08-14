@@ -3,23 +3,23 @@ name: Release
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
-    - run: npm ci
-    - run: npm run prod
-    - name: Upload zip file to release
-      uses: svenstaro/upload-release-action@2.5.0
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: neurotypical-mode.zip 
-        asset_name: neurotypical-mode.zip
-        tag: ${{ github.ref }}
-        overwrite: true
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: npm ci
+      - run: npm run prod
+      - name: Upload zip file to release
+        uses: svenstaro/upload-release-action@2.5.0
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: neurotypical-mode.zip
+          asset_name: neurotypical-mode.zip
+          tag: ${{ github.ref }}
+          overwrite: true
