@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import ControlUI from "./ControlUI";
 import {
   AllowOrForbidden,
@@ -46,4 +46,8 @@ const App: React.FunctionComponent<AppProps> = (props: AppProps) => {
   );
 };
 
-ReactDOM.render(<App port={port} />, document.getElementById("root"));
+const container = document.getElementById("root");
+if (container) {
+  const root = createRoot(container);
+  root.render(<App port={port} />);
+}
