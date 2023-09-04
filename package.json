@@ -13,9 +13,9 @@
   "author": "Masaki Nakano <namachan10777@gmail.com>",
   "license": "BSL-1.0",
   "devDependencies": {
-    "@babel/core": "7.22.11",
-    "@babel/preset-env": "7.22.14",
-    "@babel/register": "7.22.5",
+    "@babel/core": "7.22.15",
+    "@babel/preset-env": "7.22.15",
+    "@babel/register": "7.22.15",
     "@fullhuman/postcss-purgecss": "^5.0.0",
     "@types/chrome": "0.0.244",
     "@types/react": "18.2.21",
