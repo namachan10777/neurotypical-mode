@@ -18,7 +18,7 @@
     "@babel/register": "7.22.15",
     "@fullhuman/postcss-purgecss": "^5.0.0",
     "@types/chrome": "0.0.246",
-    "@types/react": "18.2.22",
+    "@types/react": "18.2.23",
     "@types/react-dom": "18.2.7",
     "@types/webpack": "5.28.3",
     "@typescript-eslint/eslint-plugin": "6.7.3",
