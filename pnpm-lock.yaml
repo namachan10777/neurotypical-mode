@@ -41,8 +41,8 @@ devDependencies:
     specifier: ^5.0.0
     version: 5.0.0(postcss@8.4.31)
   '@types/chrome':
-    specifier: 0.0.246
-    version: 0.0.246
+    specifier: 0.0.248
+    version: 0.0.248
   '@types/react':
     specifier: 18.2.28
     version: 18.2.28
@@ -1402,8 +1402,8 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@types/chrome@0.0.246:
-    resolution: {integrity: sha512-MxGxEomGxsJiL9xe/7ZwVgwdn8XVKWbPvxpVQl3nWOjrS0Ce63JsfzxUc4aU3GvRcUPYsfufHmJ17BFyKxeA4g==}
+  /@types/chrome@0.0.248:
+    resolution: {integrity: sha512-qtBzxZD1v3eWZn8XxH1i07pAhzJDHnxJBBVy7bmntXxXKxjzNXYxD41teqa5yOcX/Yy8brRFGZESEzGoINvBDg==}
     dependencies:
       '@types/filesystem': 0.0.33
       '@types/har-format': 1.2.13
