@@ -24,8 +24,8 @@ dependencies:
     specifier: ^4.12.0
     version: 4.12.0(react@18.2.0)
   sass-loader:
-    specifier: ^13.3.2
-    version: 13.3.2(webpack@5.89.0)
+    specifier: ^13.3.3
+    version: 13.3.3(webpack@5.89.0)
 
 devDependencies:
   '@babel/core':
@@ -3970,8 +3970,8 @@ packages:
       is-regex: 1.1.4
     dev: true
 
-  /sass-loader@13.3.2(webpack@5.89.0):
-    resolution: {integrity: sha512-CQbKl57kdEv+KDLquhC+gE3pXt74LEAzm+tzywcA0/aHZuub8wTErbjAoNI57rPUWRYRNC5WUnNl8eGJNbDdwg==}
+  /sass-loader@13.3.3(webpack@5.89.0):
+    resolution: {integrity: sha512-mt5YN2F1MOZr3d/wBRcZxeFgwgkH44wVc2zohO2YF6JiOMkiXe4BYRZpSu2sO1g71mo/j16txzUhsKZlqjVGzA==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       fibers: '>= 3.1.0'
