@@ -12,7 +12,7 @@ dependencies:
     specifier: ^2.7.6
     version: 2.7.6(webpack@5.89.0)
   postcss-loader:
-    specifier: ^7.3.3
+    specifier: ^7.3.4
     version: 7.3.4(postcss@8.4.33)(typescript@5.3.3)(webpack@5.89.0)
   react:
     specifier: ^18.2.0
