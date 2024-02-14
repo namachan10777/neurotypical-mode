@@ -17,7 +17,7 @@
     "@babel/preset-env": "7.23.6",
     "@babel/register": "7.22.15",
     "@fullhuman/postcss-purgecss": "^5.0.0",
-    "@types/chrome": "0.0.254",
+    "@types/chrome": "0.0.260",
     "@types/react": "18.2.45",
     "@types/react-dom": "18.2.17",
     "@types/webpack": "5.28.5",
